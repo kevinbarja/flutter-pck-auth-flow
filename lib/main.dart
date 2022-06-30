@@ -17,10 +17,10 @@ const FlutterSecureStorage secureStorage = FlutterSecureStorage();
 ///           Auth0 Variables
 /// -----------------------------------
 
-const String AUTH0_DOMAIN = 'YOUR-AUTH0-DOMAIN';
-const String AUTH0_CLIENT_ID = 'YOUR-AUTH0-CLIENT-ID';
+const String AUTH0_DOMAIN = 'sczdigital.us.auth0.com';
+const String AUTH0_CLIENT_ID = 'gTFabp7wNul0LyMSp2bmvQu5Gfdtyltc';
 
-const String AUTH0_REDIRECT_URI = 'com.auth0.flutterdemo://login-callback';
+const String AUTH0_REDIRECT_URI = 'digital.scz.app://login-callback';
 const String AUTH0_ISSUER = 'https://$AUTH0_DOMAIN';
 
 /// -----------------------------------
@@ -81,7 +81,7 @@ class Login extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        RaisedButton(
+        ElevatedButton(
           onPressed: () async {
             await loginAction();
           },
@@ -145,16 +145,20 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<Map<String, Object>> getUserDetails(String accessToken) async {
-    const String url = 'https://$AUTH0_DOMAIN/userinfo';
-    final http.Response response = await http.get(
-      url,
-      headers: <String, String>{'Authorization': 'Bearer $accessToken'},
-    );
+    try {
+      const String url = 'https://$AUTH0_DOMAIN/userinfo';
+      final http.Response response = await http.get(
+        url,
+        headers: <String, String>{'Authorization': 'Bearer $accessToken'},
+      );
 
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      throw Exception('Failed to get user details');
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        throw Exception('Failed to get user details');
+      }
+    } catch (e){
+      print(e);
     }
   }
 
