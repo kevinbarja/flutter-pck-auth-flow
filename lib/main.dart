@@ -55,7 +55,7 @@ class Profile extends StatelessWidget {
         const SizedBox(height: 24),
         Text('Name: $name'),
         const SizedBox(height: 48),
-        RaisedButton(
+        ElevatedButton (
           onPressed: () async {
             await logoutAction();
           },
